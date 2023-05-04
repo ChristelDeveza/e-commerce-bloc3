@@ -4,9 +4,7 @@ spring:
   #     matching-strategy: ANT_PATH_MATCHER
 
   datasource:
-    url: jdbc:postgresql://postgresql-chdprojets.alwaysdata.net/chdprojets_ecommerce
-    username: chdprojets_commerce
-    password: ortide66720
+
     # driver-class-name: org.postgresql.Driver
 
   jpa:
