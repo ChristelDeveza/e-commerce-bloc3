@@ -2,6 +2,7 @@ package com.ecommerce.commercial.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,12 +22,26 @@ public class ProductServiceImpl implements ProductService {
   @Override
   public List<Product> getAllProducts() {
    return productRepository.findAll();
-   
   }
 
   @Override
   public void createProduct(Product product) {
     productRepository.save(product);
+  }
+
+  @Override
+  public void updateProduct(Long id, Product product) {
+    Optional<Product> existingProduct = productRepository.findById(id);
+    if(existingProduct.isPresent()) {
+      Product updatedProduct = existingProduct.get();
+      if(product.getName() != null){
+        updatedProduct.setName(product.getName());
+      }
+      if(product.getPrice() != null) {
+        updatedProduct.setPrice(product.getPrice());
+      }
+      productRepository.save(updatedProduct);
+    }
   }
   
 }
