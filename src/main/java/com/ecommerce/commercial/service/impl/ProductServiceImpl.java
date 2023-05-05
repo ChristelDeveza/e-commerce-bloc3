@@ -23,5 +23,10 @@ public class ProductServiceImpl implements ProductService {
    return productRepository.findAll();
    
   }
+
+  @Override
+  public void createProduct(Product product) {
+    productRepository.save(product);
+  }
   
 }
