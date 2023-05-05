@@ -6,4 +6,7 @@ import com.ecommerce.commercial.model.Product;
 
 public interface ProductService {
   List<Product> getAllProducts();
+
+  void createProduct(Product product);
+
 }
