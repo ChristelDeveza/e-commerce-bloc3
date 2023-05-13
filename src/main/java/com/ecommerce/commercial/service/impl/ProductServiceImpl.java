@@ -30,10 +30,7 @@ public class ProductServiceImpl implements ProductService {
     return productId.orElse(null);
   }
 
-  @Override
-  public void createProduct(Product product) {
-    productRepository.save(product);
-  }
+  
 
   @Override
   public void updateProduct(Long id, Product product) {

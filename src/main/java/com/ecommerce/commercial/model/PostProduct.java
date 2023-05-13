@@ -1,21 +1,17 @@
 package com.ecommerce.commercial.model;
 
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-// import jakarta.persistence.Lob;
 import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 
 @Entity
-public class Product {
-
+@Table(name="product")
+public class PostProduct {
+  
   @Id
   @SequenceGenerator(name = "product_seq", sequenceName = "product_seq", allocationSize = 1)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq")
@@ -44,29 +40,26 @@ public class Product {
   //   this.price = price;
   //   this.image = image;
   // }
+@Column(name="category_id")
+  private Long categoryId;
 
-  @ManyToOne
-  @JoinColumn(name = "category_id")
-  @JsonManagedReference
-  private Category category;
-
-  public Product(String name, Long price, String description, Category category) {
+  public PostProduct(String name, Long price, String description, Long categoryId) {
     this.name = name;
     this.price = price;
     this.description = description;
-    this.category = category;
+    this.categoryId = categoryId;
     
   }
 
-  public Product(Long id, String name, Long price, String description, Category category) {
+  public PostProduct(Long id, String name, Long price, String description, Long categoryId) {
     this.id = id;
     this.name = name;
     this.price = price;
     this.description = description;
-    this.category = category;
+    this.categoryId = categoryId;
    
   }
-  public Product() {
+  public PostProduct() {
     //Needed Hibernate
   }
 
@@ -102,20 +95,11 @@ public void setDescription(String description) {
   this.description = description;
 }
 
-  public Category getCategory() {
-    return category;
+  public Long getCategoryId() {
+    return categoryId;
   }
 
-  public void setCategory(Category category) {
-    this.category = category;
+  public void setCategoryId(Long categoryId) {
+    this.categoryId = categoryId;
   }
-
-//   public byte[] getImage() {
-//     return image;
-// }
-
-// public void setImage(byte[] image) {
-//     this.image = image;
-// }
-
 }
