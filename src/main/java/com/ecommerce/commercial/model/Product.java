@@ -2,11 +2,16 @@ package com.ecommerce.commercial.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 // import jakarta.persistence.Lob;
 import jakarta.persistence.SequenceGenerator;
@@ -23,6 +28,8 @@ public class Product {
   private String name;
   
   private Long price;
+
+  private String description;
 
   // @Lob
   // @Column(columnDefinition = "bytea")
@@ -41,20 +48,24 @@ public class Product {
   //   this.image = image;
   // }
 
-  @OneToMany(mappedBy = "product")
-  private List<Category> category;
+  @ManyToOne
+  @JoinColumn(name = "category_id")
+  @JsonManagedReference
+  private Category category;
 
-  public Product(String name, Long price, List<Category> category) {
+  public Product(String name, Long price, String description, Category category) {
     this.name = name;
     this.price = price;
+    this.description = description;
     this.category = category;
     
   }
 
-  public Product(Long id, String name, Long price, List<Category> category) {
+  public Product(Long id, String name, Long price, String description, Category category) {
     this.id = id;
     this.name = name;
     this.price = price;
+    this.description = description;
     this.category = category;
    
   }
@@ -86,11 +97,19 @@ public class Product {
     this.price = price;
   }
 
-  public List<Category> getCategory() {
+  public String getDescription() {
+    return description;
+  }
+
+public void setDescription(String description) {
+  this.description = description;
+}
+
+  public Category getCategory() {
     return category;
   }
 
-  public void setCapacitesList(List<Category> category) {
+  public void setCapacitesList(Category category) {
     this.category = category;
   }
 
