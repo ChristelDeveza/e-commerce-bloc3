@@ -41,7 +41,7 @@ public RedirectView createProduct(@RequestPart PostProduct postProduct, @Request
       String photo = StringUtils.cleanPath(multipartFile.getOriginalFilename());
       postProduct.setImage(photo);
       PostProduct savedPostProduct = postProductService.createProduct(postProduct);
-  String uploadDir = "./resources/static/photo/" + savedPostProduct.getId();
+  String uploadDir = "commercial/src/main/resources/static/photo/" + savedPostProduct.getId();
   FileUploadUtil.saveFile(uploadDir, photo, multipartFile);
   return new RedirectView("/products", true);
 }
