@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -24,9 +25,7 @@ public class PostProduct {
 
   private String description;
 
-  // @Lob
-  // @Column(columnDefinition = "bytea")
-  // private byte[] image;
+  private String image;
 
   // public Product(String name, Long price, byte[] image) {
   //   this.name = name;
@@ -43,20 +42,22 @@ public class PostProduct {
 @Column(name="category_id")
   private Long categoryId;
 
-  public PostProduct(String name, Long price, String description, Long categoryId) {
+  public PostProduct(String name, Long price, String description, Long categoryId, String image) {
     this.name = name;
     this.price = price;
     this.description = description;
     this.categoryId = categoryId;
+    this.image = image;
     
   }
 
-  public PostProduct(Long id, String name, Long price, String description, Long categoryId) {
+  public PostProduct(Long id, String name, Long price, String description, Long categoryId, String image) {
     this.id = id;
     this.name = name;
     this.price = price;
     this.description = description;
     this.categoryId = categoryId;
+    this.image = image;
    
   }
   public PostProduct() {
@@ -102,4 +103,18 @@ public void setDescription(String description) {
   public void setCategoryId(Long categoryId) {
     this.categoryId = categoryId;
   }
+
+  public String getImage() {
+    return image;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
+  }
+
+  public String getPhotosImagePath() {
+    if (image == null || id == null) return null;
+     
+    return "./resources/static/photo/" + id + "/" + image;
+}
 }

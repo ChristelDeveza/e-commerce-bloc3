@@ -14,8 +14,8 @@ public class PostProductServiceImpl implements PostProductService {
   private PostProductRepository postProductRepository;
 
   @Override
-  public void createProduct(PostProduct postProduct) {
-    postProductRepository.save(postProduct);
+  public PostProduct createProduct(PostProduct postProduct) {
+    return postProductRepository.save(postProduct);
   }
 }
 
