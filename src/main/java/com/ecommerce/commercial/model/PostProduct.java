@@ -115,6 +115,6 @@ public void setDescription(String description) {
   public String getPhotosImagePath() {
     if (image == null || id == null) return null;
      
-    return "./resources/static/photo/" + id + "/" + image;
+    return "/photo/" + id + "/" + image;
 }
 }
