@@ -10,7 +10,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-// import jakarta.persistence.Lob;
 import jakarta.persistence.SequenceGenerator;
 
 @Entity
@@ -35,21 +34,33 @@ public class Product {
   @JsonManagedReference
   private Category category;
 
-  public Product(String name, Long price, String description, Category category, String image) {
+  @ManyToOne
+  @JoinColumn(name = "discount_id")
+  @JsonManagedReference
+  private Discount discount;
+
+@Column(name="discount_price")
+  private Long discountedPrice;
+
+  public Product(String name, Long price, String description, Category category, String image, Discount discount, Long discountedPrice) {
     this.name = name;
     this.price = price;
     this.description = description;
     this.category = category;
     this.image = image;
+    this.discount = discount;
+    this.discountedPrice = discountedPrice;
   }
 
-  public Product(Long id, String name, Long price, String description, Category category, String image) {
+  public Product(Long id, String name, Long price, String description, Category category, String image, Discount discount, Long discountedPrice) {
     this.id = id;
     this.name = name;
     this.price = price;
     this.description = description;
     this.category = category;
     this.image = image;
+    this.discount = discount;
+    this.discountedPrice = discountedPrice;
   }
 
   public Product() {
@@ -108,5 +119,21 @@ public void setDescription(String description) {
     if (image == null || id == null) return null;
      
     return "/photo/" + id + "/" + image;
+  }
+
+  public Discount getDiscount() {
+    return discount;
+  }
+
+  public void setDiscount(Discount discount) {
+    this.discount = discount;
+  }
+
+  public Long getDiscountedPrice() {
+    return discountedPrice;
+  }
+
+  public void setDiscountedPrice(Long discountedPrice) {
+    this.discountedPrice = discountedPrice;
   }
 }
