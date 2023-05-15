@@ -112,9 +112,9 @@ public void setDescription(String description) {
     this.image = image;
   }
 
-  public String getPhotosImagePath() {
-    if (image == null || id == null) return null;
+//   public String getPhotosImagePath() {
+//     if (image == null || id == null) return null;
      
-    return "/photo/" + id + "/" + image;
-}
+//     return "commercial/src/main/resources/static/photo/" + id + "/" + image;
+// }
 }
