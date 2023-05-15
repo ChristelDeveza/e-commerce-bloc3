@@ -28,44 +28,30 @@ public class Product {
 
   private String description;
 
-  // @Lob
-  // @Column(columnDefinition = "bytea")
-  // private byte[] image;
-
-  // public Product(String name, Long price, byte[] image) {
-  //   this.name = name;
-  //   this.price = price;
-  //   this.image = image;
-  // }
-
-  // public Product(Long id, String name, Long price, byte[] image) {
-  //   this.id = id;
-  //   this.name = name;
-  //   this.price = price;
-  //   this.image = image;
-  // }
+  private String image;
 
   @ManyToOne
   @JoinColumn(name = "category_id")
   @JsonManagedReference
   private Category category;
 
-  public Product(String name, Long price, String description, Category category) {
+  public Product(String name, Long price, String description, Category category, String image) {
     this.name = name;
     this.price = price;
     this.description = description;
     this.category = category;
-    
+    this.image = image;
   }
 
-  public Product(Long id, String name, Long price, String description, Category category) {
+  public Product(Long id, String name, Long price, String description, Category category, String image) {
     this.id = id;
     this.name = name;
     this.price = price;
     this.description = description;
     this.category = category;
-   
+    this.image = image;
   }
+
   public Product() {
     //Needed Hibernate
   }
@@ -110,12 +96,17 @@ public void setDescription(String description) {
     this.category = category;
   }
 
-//   public byte[] getImage() {
-//     return image;
-// }
+  public String getImage() {
+    return image;
+  }
 
-// public void setImage(byte[] image) {
-//     this.image = image;
-// }
+  public void setImage(String image) {
+    this.image = image;
+  }
 
+  public String getPhotosImagePath() {
+    if (image == null || id == null) return null;
+     
+    return "/photo/" + id + "/" + image;
+  }
 }
