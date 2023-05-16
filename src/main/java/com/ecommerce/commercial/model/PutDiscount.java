@@ -1,22 +1,20 @@
 package com.ecommerce.commercial.model;
 
 import java.time.LocalDate;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="discount")
-public class Discount {
+public class PutDiscount {
   
   @Id
   @SequenceGenerator(name = "discount_seq", sequenceName = "discount_seq", allocationSize = 1)
@@ -33,25 +31,24 @@ public class Discount {
   @Column(name="pourcent")
   private Long percentage;
 
-  
-  @OneToMany(mappedBy = "discount")
-  @JsonBackReference
-  private List<Product> product;
+  @ManyToOne
+  @JoinColumn(name="discount_id", insertable=false, updatable=false)
+  private UpdateProduct updateProduct;
 
-  public Discount(LocalDate startDate, LocalDate endDate, Long percentage) {
+  public PutDiscount(LocalDate startDate, LocalDate endDate, Long percentage) {
     this.startDate = startDate;
     this.endDate = endDate;
     this.percentage = percentage;
   }
 
-  public Discount(Long id, LocalDate startDate, LocalDate endDate, Long percentage) {
+  public PutDiscount(Long id, LocalDate startDate, LocalDate endDate, Long percentage) {
     this.id = id;
     this.startDate = startDate;
     this.endDate = endDate;
     this.percentage = percentage;
   }
 
-  public Discount() {
+  public PutDiscount() {
     //Needed Hibernate
   }
 
@@ -87,14 +84,12 @@ public class Discount {
     this.percentage = percentage;
   }
 
-  public List<Product> getProduct() {
-    return product;
+  public UpdateProduct getUpdatePostProduct() {
+    return updateProduct;
   }
 
-  public void setProduct(List<Product> product) {
-    this.product = product;
+  public void setPostProduct(UpdateProduct updateProduct) {
+    this.updateProduct = updateProduct;
   }
-
-  
 
 }

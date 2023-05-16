@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ecommerce.commercial.model.PutDiscount;
 import com.ecommerce.commercial.model.UpdateProduct;
 import com.ecommerce.commercial.repository.UpdateProductRepository;
 import com.ecommerce.commercial.service.UpdateProductService;
@@ -34,15 +35,20 @@ public class UpdateProductServiceImpl implements UpdateProductService{
         updatedProduct.setCategoryId(updateProduct.getCategoryId());
       }
 
-      if(updateProduct.getDiscountId() != null) {
-        updatedProduct.setDiscountId(updateProduct.getDiscountId());
+      //For loop iteration to access to getPercentage() in PutDiscount
+      if (updateProduct.getPutDiscount() != null) {
+        for (PutDiscount putDiscount : updateProduct.getPutDiscount()) {
+          if (putDiscount.getPercentage() != null) {
+            Long percentage = putDiscount.getPercentage();
+            Long price = updateProduct.getPrice();
+            Long discountAmount = (price * percentage) / 100;
+            updatedProduct.setDiscountedPrice(price - discountAmount);
+            break; 
+          }
+        }
       }
-
-      if(updateProduct.getDiscountedPrice() != null) {
-        updatedProduct.setDiscountedPrice(updateProduct.getDiscountedPrice());
-      }
-
-     
+      
+        
       updateProductRepository.save(updatedProduct);
     }
   }

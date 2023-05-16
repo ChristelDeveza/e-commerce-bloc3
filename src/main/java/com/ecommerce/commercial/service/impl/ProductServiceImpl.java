@@ -1,6 +1,5 @@
 package com.ecommerce.commercial.service.impl;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -8,7 +7,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ecommerce.commercial.model.Discount;
 import com.ecommerce.commercial.model.Product;
 import com.ecommerce.commercial.repository.ProductRepository;
 import com.ecommerce.commercial.service.ProductService;

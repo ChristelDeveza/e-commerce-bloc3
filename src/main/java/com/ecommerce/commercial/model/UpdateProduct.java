@@ -1,8 +1,14 @@
 package com.ecommerce.commercial.model;
 
+import java.util.List;
+
+import org.hibernate.annotations.ManyToAny;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,30 +30,30 @@ public class UpdateProduct {
   @Column(name="category_id")
   private Long categoryId;
 
-  @Column(name = "discount_id")
-  private Long discountId;
+  @OneToMany(mappedBy = "updateProduct")
+  private List<PutDiscount> putDiscount;
 
   @Column(name="discount_price")
   private Long discountedPrice;
 
-  public UpdateProduct(String name, Long price, String description, Long categoryId, String image, Long discountId, Long discountedPrice) {
+  public UpdateProduct(String name, Long price, String description, Long categoryId, String image, List<PutDiscount> putDiscount, Long discountedPrice) {
     this.name = name;
     this.price = price;
     this.description = description;
     this.categoryId = categoryId;
     this.image = image;
-    this.discountId = discountId;
+    this.putDiscount = putDiscount;
     this.discountedPrice = discountedPrice;
   }
 
-  public UpdateProduct(Long id, String name, Long price, String description, Long categoryId, String image, Long discountId, Long discountedPrice) {
+  public UpdateProduct(Long id, String name, Long price, String description, Long categoryId, String image, List<PutDiscount> putDiscount, Long discountedPrice) {
     this.id = id;
     this.name = name;
     this.price = price;
     this.description = description;
     this.categoryId = categoryId;
     this.image = image;
-    this.discountId = discountId;
+    this.putDiscount = putDiscount;
     this.discountedPrice = discountedPrice;
   }
 
@@ -110,14 +116,14 @@ public void setCategoryId(Long categoryId) {
     return "/photo/" + id + "/" + image;
   }
 
-  public Long getDiscountId() {
-    return discountId;
+  public List<PutDiscount> getPutDiscount() {
+    return putDiscount;
   }
-
-  public void setDiscountId(Long discountId) {
-    this.discountId = discountId;
+  
+  public void setPutDiscount(List<PutDiscount> putDiscount) {
+    this.putDiscount = putDiscount;
   }
-
+  
   public Long getDiscountedPrice() {
     return discountedPrice;
   }

@@ -26,19 +26,7 @@ public class PostProduct {
 
   private String image;
 
-  // public Product(String name, Long price, byte[] image) {
-  //   this.name = name;
-  //   this.price = price;
-  //   this.image = image;
-  // }
-
-  // public Product(Long id, String name, Long price, byte[] image) {
-  //   this.id = id;
-  //   this.name = name;
-  //   this.price = price;
-  //   this.image = image;
-  // }
-@Column(name="category_id")
+  @Column(name="category_id")
   private Long categoryId;
 
   public PostProduct(String name, Long price, String description, Long categoryId, String image) {
