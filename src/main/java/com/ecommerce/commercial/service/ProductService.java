@@ -7,6 +7,6 @@ import com.ecommerce.commercial.model.Product;
 public interface ProductService {
   List<Product> getAllProducts();
   Product getProductById(Long id);
-  void updateProduct(Long id, Product product);
+  // void updateProduct(Long id, Product product);
   void deleteProduct(Long id);
 }

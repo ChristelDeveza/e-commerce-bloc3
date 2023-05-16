@@ -11,11 +11,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
 
 @Entity
 public class Discount {
   
   @Id
+  @SequenceGenerator(name = "discount_seq", sequenceName = "discount_seq", allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "discount_seq")
   @Column(name = "discount_id", updatable = false)
   private Long id;
 

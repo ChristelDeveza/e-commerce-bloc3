@@ -1,23 +1,15 @@
 package com.ecommerce.commercial.model;
 
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 
 @Entity
-public class Product {
+@Table(name="product")
+public class UpdateProduct {
 
   @Id
-  @SequenceGenerator(name = "product_seq", sequenceName = "product_seq", allocationSize = 1)
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq")
   @Column(name = "product_id", updatable = false)
   private Long id;
 
@@ -29,41 +21,37 @@ public class Product {
 
   private String image;
 
-  @ManyToOne
-  @JoinColumn(name = "category_id")
-  @JsonManagedReference
-  private Category category;
+  @Column(name="category_id")
+  private Long categoryId;
 
-  @ManyToOne
-  @JoinColumn(name = "discount_id")
- @JsonManagedReference
-  private Discount discount;
+  @Column(name = "discount_id")
+  private Long discountId;
 
-@Column(name="discount_price")
+  @Column(name="discount_price")
   private Long discountedPrice;
 
-  public Product(String name, Long price, String description, Category category, String image, Discount discount, Long discountedPrice) {
+  public UpdateProduct(String name, Long price, String description, Long categoryId, String image, Long discountId, Long discountedPrice) {
     this.name = name;
     this.price = price;
     this.description = description;
-    this.category = category;
+    this.categoryId = categoryId;
     this.image = image;
-    this.discount = discount;
+    this.discountId = discountId;
     this.discountedPrice = discountedPrice;
   }
 
-  public Product(Long id, String name, Long price, String description, Category category, String image, Discount discount, Long discountedPrice) {
+  public UpdateProduct(Long id, String name, Long price, String description, Long categoryId, String image, Long discountId, Long discountedPrice) {
     this.id = id;
     this.name = name;
     this.price = price;
     this.description = description;
-    this.category = category;
+    this.categoryId = categoryId;
     this.image = image;
-    this.discount = discount;
+    this.discountId = discountId;
     this.discountedPrice = discountedPrice;
   }
 
-  public Product() {
+  public UpdateProduct() {
     //Needed Hibernate
   }
 
@@ -99,13 +87,14 @@ public void setDescription(String description) {
   this.description = description;
 }
 
-  public Category getCategory() {
-    return category;
-  }
+public Long getCategoryId() {
+  return categoryId;
+}
 
-  public void setCategory(Category category) {
-    this.category = category;
-  }
+public void setCategoryId(Long categoryId) {
+  this.categoryId = categoryId;
+}
+
 
   public String getImage() {
     return image;
@@ -121,12 +110,12 @@ public void setDescription(String description) {
     return "/photo/" + id + "/" + image;
   }
 
-  public Discount getDiscount() {
-    return discount;
+  public Long getDiscountId() {
+    return discountId;
   }
 
-  public void setDiscount(Discount discount) {
-    this.discount = discount;
+  public void setDiscountId(Long discountId) {
+    this.discountId = discountId;
   }
 
   public Long getDiscountedPrice() {
