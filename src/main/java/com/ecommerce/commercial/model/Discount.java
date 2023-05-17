@@ -19,8 +19,8 @@ import jakarta.persistence.Table;
 public class Discount {
   
   @Id
-  @SequenceGenerator(name = "discount_seq", sequenceName = "discount_seq", allocationSize = 1)
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "discount_seq")
+  // @SequenceGenerator(name = "discount_id", sequenceName = "discount_id", allocationSize = 1)
+  // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "discount_id")
   @Column(name = "discount_id", updatable = false)
   private Long id;
 

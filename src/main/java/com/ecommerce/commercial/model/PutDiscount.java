@@ -17,8 +17,8 @@ import jakarta.persistence.Table;
 public class PutDiscount {
   
   @Id
-  @SequenceGenerator(name = "discount_seq", sequenceName = "discount_seq", allocationSize = 1)
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "discount_seq")
+  @SequenceGenerator(name = "discount_id_seq", sequenceName = "discount_id_seq", allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "discount_id_seq")
   @Column(name = "discount_id", updatable = false)
   private Long id;
 
@@ -35,17 +35,19 @@ public class PutDiscount {
   @JoinColumn(name="discount_id", insertable=false, updatable=false)
   private UpdateProduct updateProduct;
 
-  public PutDiscount(LocalDate startDate, LocalDate endDate, Long percentage) {
+  public PutDiscount(LocalDate startDate, LocalDate endDate, Long percentage, UpdateProduct updateProduct) {
     this.startDate = startDate;
     this.endDate = endDate;
     this.percentage = percentage;
+    this.updateProduct = updateProduct;
   }
 
-  public PutDiscount(Long id, LocalDate startDate, LocalDate endDate, Long percentage) {
+  public PutDiscount(Long id, LocalDate startDate, LocalDate endDate, Long percentage, UpdateProduct updateProduct) {
     this.id = id;
     this.startDate = startDate;
     this.endDate = endDate;
     this.percentage = percentage;
+    this.updateProduct = updateProduct;
   }
 
   public PutDiscount() {
@@ -84,11 +86,11 @@ public class PutDiscount {
     this.percentage = percentage;
   }
 
-  public UpdateProduct getUpdatePostProduct() {
+  public UpdateProduct getUpdateProduct() {
     return updateProduct;
   }
 
-  public void setPostProduct(UpdateProduct updateProduct) {
+  public void setUpdateProduct(UpdateProduct updateProduct) {
     this.updateProduct = updateProduct;
   }
 
