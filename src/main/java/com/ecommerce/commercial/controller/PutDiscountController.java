@@ -21,11 +21,13 @@ public class PutDiscountController {
 @Autowired
 private PutDiscountService putDiscountService;
 
+//Permet de créer un nouveau discount
 @PostMapping
 public void savePutDiscount(@RequestBody PutDiscount putDiscount) {
  putDiscountService.savePutDiscount(putDiscount);
 }
 
+// Permet de rechercher un discount by Id
 @GetMapping("{id}")
 public PutDiscount getPutDiscountById(@PathVariable(name="id") Long id) {
   return putDiscountService.getPutDiscountById(id);

@@ -22,4 +22,5 @@ public class PutDiscountServiceImpl implements PutDiscountService{
     public PutDiscount getPutDiscountById(Long id) {
       return putDiscountRepository.findById(id).orElse(null);
     }
+
 }

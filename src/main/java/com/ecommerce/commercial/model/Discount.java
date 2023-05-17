@@ -7,11 +7,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,8 +16,6 @@ import jakarta.persistence.Table;
 public class Discount {
   
   @Id
-  // @SequenceGenerator(name = "discount_id", sequenceName = "discount_id", allocationSize = 1)
-  // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "discount_id")
   @Column(name = "discount_id", updatable = false)
   private Long id;
 
