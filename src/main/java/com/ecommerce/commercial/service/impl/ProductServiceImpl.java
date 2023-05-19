@@ -32,20 +32,42 @@ public class ProductServiceImpl implements ProductService {
 
   
 
-  @Override
-  public void updateProduct(Long id, Product product) {
-    Optional<Product> existingProduct = productRepository.findById(id);
-    if(existingProduct.isPresent()) {
-      Product updatedProduct = existingProduct.get();
-      if(product.getName() != null){
-        updatedProduct.setName(product.getName());
-      }
-      if(product.getPrice() != null) {
-        updatedProduct.setPrice(product.getPrice());
-      }
-      productRepository.save(updatedProduct);
-    }
-  }
+
+  // @Override
+  // public void updateProduct(Long id, Product product) {
+  //   Optional<Product> existingProduct = productRepository.findById(id);
+  //   if (existingProduct.isPresent()) {
+  //     Product updatedProduct = existingProduct.get();
+  //     if (product.getName() != null) {
+  //       updatedProduct.setName(product.getName());
+  //     }
+  //     if (product.getPrice() != null) {
+  //       updatedProduct.setPrice(product.getPrice());
+  //     }
+
+
+
+  //     // Vérifier si le produit a un discount associé et si la date actuelle est comprise entre la date de début et de fin
+  //     Discount discount = updatedProduct.getDiscount();
+  //     if (discount != null && isWithinDiscountPeriod(discount)) {
+  //       // Calculer le montant du prix modifié
+  //       Long discountPercentage = discount.getPercentage()/ 100;
+  //       Long discountedPrice = updatedProduct.getPrice() * (1 - discountPercentage);
+  //       updatedProduct.setDiscountedPrice(discountedPrice);
+  //     } else {
+  //       // Pas de discount ou en dehors de la période de discount, utiliser le prix initial
+  //       updatedProduct.setDiscountedPrice(updatedProduct.getPrice());
+  //     }
+
+  //     productRepository.save(updatedProduct);
+  //   }
+  // }
+
+  // private boolean isWithinDiscountPeriod(Discount discount) {
+  //   LocalDate currentDate = LocalDate.now();
+  //   return currentDate.isEqual(discount.getStartDate()) || currentDate.isAfter(discount.getStartDate())
+  //       && (discount.getEndDate() == null || currentDate.isBefore(discount.getEndDate()));
+  // }
 
   @Override
   public void deleteProduct(Long id) {
