@@ -28,30 +28,33 @@ public class UpdateProduct {
   @Column(name="category_id")
   private Long categoryId;
 
-  @OneToMany(mappedBy = "updateProduct", cascade = CascadeType.ALL)
-  private List<PutDiscount> putDiscount;
+  // @OneToMany(mappedBy = "updateProduct", cascade = CascadeType.ALL)
+  // private List<PutDiscount> putDiscount;
+
+  @Column(name="discount_id")
+  private Long discountId;
 
   @Column(name="discount_price")
   private Long discountedPrice;
 
-  public UpdateProduct(String name, Long price, String description, Long categoryId, String image, List<PutDiscount> putDiscount, Long discountedPrice) {
+  public UpdateProduct(String name, Long price, String description, Long categoryId, String image, Long discountId, Long discountedPrice) {
     this.name = name;
     this.price = price;
     this.description = description;
     this.categoryId = categoryId;
     this.image = image;
-    this.putDiscount = putDiscount;
+    this.discountId = discountId;
     this.discountedPrice = discountedPrice;
   }
 
-  public UpdateProduct(Long id, String name, Long price, String description, Long categoryId, String image, List<PutDiscount> putDiscount, Long discountedPrice) {
+  public UpdateProduct(Long id, String name, Long price, String description, Long categoryId, String image, Long discountId, Long discountedPrice) {
     this.id = id;
     this.name = name;
     this.price = price;
     this.description = description;
     this.categoryId = categoryId;
     this.image = image;
-    this.putDiscount = putDiscount;
+    this.discountId = discountId;
     this.discountedPrice = discountedPrice;
   }
 
@@ -114,12 +117,12 @@ public void setCategoryId(Long categoryId) {
     return "/photo/" + id + "/" + image;
   }
 
-  public List<PutDiscount> getPutDiscount() {
-    return putDiscount;
+  public Long getDiscountId() {
+    return discountId;
   }
   
-  public void setPutDiscount(List<PutDiscount> putDiscount) {
-    this.putDiscount = putDiscount;
+  public void setDiscountId(Long discountId) {
+    this.discountId = discountId;
   }
   
   public Long getDiscountedPrice() {

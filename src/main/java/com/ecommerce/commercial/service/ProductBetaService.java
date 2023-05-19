@@ -13,7 +13,8 @@ public interface ProductBetaService {
   void deleteProduct(Long productId);
   DiscountBeta getDiscountById(Long discountId);
   List<DiscountBeta> getAllDiscounts();
-  void applyDiscountToProduct(Long productId, Long discountId);
+  void applyDiscountToProduct(Long productId, Long discoundId);
+  
 }
 
 

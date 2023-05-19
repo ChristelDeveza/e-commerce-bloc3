@@ -18,6 +18,7 @@ public class UpdateProductController {
   
 @Autowired
 private UpdateProductService updateProductService;
+
   
 @PutMapping("{id}")
 public void updateProduct(@PathVariable(name="id") Long id, @RequestBody UpdateProduct updateProduct) {

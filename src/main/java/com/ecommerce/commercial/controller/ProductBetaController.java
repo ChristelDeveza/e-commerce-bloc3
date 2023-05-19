@@ -4,12 +4,16 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecommerce.commercial.model.DiscountBeta;
@@ -17,6 +21,7 @@ import com.ecommerce.commercial.model.ProductBeta;
 import com.ecommerce.commercial.service.ProductBetaService;
 
 @RestController
+@CrossOrigin(origins="*")
 @RequestMapping("/productsBeta")
 public class ProductBetaController {
 
@@ -70,7 +75,19 @@ public class ProductBetaController {
     }
 
     //Permet de lier un discount à un produit
-    @PostMapping("/{productId}/discounts/{discountId}")
+    // @CrossOrigin(origins = "http://127.0.0.1:5173", methods = {RequestMethod.POST})
+    // @PostMapping("/applyDiscount")
+    // public ResponseEntity<Void> applyDiscountToProduct(@RequestParam("productId") Long productId, @RequestParam("discountId") Long discountId) {
+    //     productBetaService.applyDiscountToProduct(productId, discountId);
+    //     return ResponseEntity.ok().build();
+    // }
+
+    // @PostMapping("/{productId}")
+    // public ResponseEntity<Void> applyDiscountToProduct(@PathVariable Long productId) {
+    //     productBetaService.applyDiscountToProduct(productId);
+    //     return ResponseEntity.ok().build();
+    // }
+    @PostMapping("/apply/{productId}/{discountId}")
     public ResponseEntity<Void> applyDiscountToProduct(@PathVariable Long productId, @PathVariable Long discountId) {
         productBetaService.applyDiscountToProduct(productId, discountId);
         return ResponseEntity.ok().build();

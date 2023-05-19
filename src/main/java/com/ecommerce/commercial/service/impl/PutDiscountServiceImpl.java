@@ -1,5 +1,7 @@
 package com.ecommerce.commercial.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,11 @@ public class PutDiscountServiceImpl implements PutDiscountService{
     @Override
     public PutDiscount getPutDiscountById(Long id) {
       return putDiscountRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<PutDiscount> getAllDiscounts() {
+      return putDiscountRepository.findAll();
     }
 
 }

@@ -1,6 +1,9 @@
 package com.ecommerce.commercial.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +28,12 @@ private PutDiscountService putDiscountService;
 @PostMapping
 public void savePutDiscount(@RequestBody PutDiscount putDiscount) {
  putDiscountService.savePutDiscount(putDiscount);
+}
+
+//Pb de serialisation
+@GetMapping("/all")
+public List<PutDiscount> getAllDiscounts() {
+    return putDiscountService.getAllDiscounts();
 }
 
 // Permet de rechercher un discount by Id
