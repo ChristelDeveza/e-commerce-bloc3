@@ -29,7 +29,7 @@ public class AuthController {
             // Générer le JWT ici et renvoyer dans la réponse
             String jwt = JwtConfig.generateJwt(user.getUsername()); // Utilisation de la classe JwtConfig pour générer le JWT
 
-            return ResponseEntity.ok(jwt + " Utilisateur connecté");
+            return ResponseEntity.ok(jwt);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Identifiant ou mot de passe incorrect");
         }
