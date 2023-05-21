@@ -9,6 +9,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.ecommerce.commercial.config.JwtConfig;
 import com.ecommerce.commercial.model.PostProduct;
 import com.ecommerce.commercial.service.PostProductService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @CrossOrigin
@@ -35,15 +40,38 @@ public class PostProductController {
 //   postProductService.createProduct(postProduct);
 // }
 
+// @PostMapping
+// public RedirectView createProduct(@RequestPart PostProduct postProduct, @RequestParam("image") MultipartFile multipartFile) throws IOException {
+//       String photo = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+//       postProduct.setImage(photo);
+//       PostProduct savedPostProduct = postProductService.createProduct(postProduct);
+//   String uploadDir = "commercial/src/main/resources/static/photo/" + savedPostProduct.getId();
+//   FileUploadUtil.saveFile(uploadDir, photo, multipartFile);
+//   return new RedirectView("/products", true);
+// }
+
 @PostMapping
-public RedirectView createProduct(@RequestPart PostProduct postProduct, @RequestParam("image") MultipartFile multipartFile) throws IOException {
-      String photo = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-      postProduct.setImage(photo);
-      PostProduct savedPostProduct = postProductService.createProduct(postProduct);
-  String uploadDir = "commercial/src/main/resources/static/photo/" + savedPostProduct.getId();
-  FileUploadUtil.saveFile(uploadDir, photo, multipartFile);
-  return new RedirectView("/products", true);
+public ResponseEntity<String> createProduct(@RequestPart PostProduct postProduct, @RequestParam("image") MultipartFile multipartFile, HttpServletRequest request) throws IOException {
+    String jwt = request.getHeader("Authorization");
+    String newJwt = jwt.replace("Bearer ", "");
+    System.out.print(newJwt);
+    if (newJwt == null || newJwt.isEmpty()) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("JWT manquant");
+    }
+
+    if (JwtConfig.validateJwt(newJwt)) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("JWT invalide");
+    }
+
+    String photo = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+    postProduct.setImage(photo);
+    PostProduct savedPostProduct = postProductService.createProduct(postProduct);
+    String uploadDir = "commercial/src/main/resources/static/photo/" + savedPostProduct.getId();
+    FileUploadUtil.saveFile(uploadDir, photo, multipartFile);
+    return ResponseEntity.ok("Produit créé avec succès");
 }
+
+
 
 public class FileUploadUtil {
   public static void saveFile(String uploadDir, String photo,

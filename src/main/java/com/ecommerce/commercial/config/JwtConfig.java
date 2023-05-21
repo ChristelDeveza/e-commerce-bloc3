@@ -9,8 +9,8 @@ import io.jsonwebtoken.security.Keys;
 
 public class JwtConfig {
 
-    private static final long EXPIRATION_TIME = 36000000L; // Expiration time in milliseconds
-
+    private static final long EXPIRATION_TIME = 36000000L; 
+    
     public static String generateJwt(String username) {
         Date now = new Date();
         Date expirationDate = new Date(now.getTime() + EXPIRATION_TIME);
