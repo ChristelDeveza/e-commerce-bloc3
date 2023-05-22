@@ -23,7 +23,6 @@ public class UpdateProductController {
   
 @Autowired
 private UpdateProductService updateProductService;
-
   
 @PutMapping("{id}")
 public ResponseEntity<String> updateProduct(@PathVariable(name="id") Long id, @RequestBody UpdateProduct updateProduct, HttpServletRequest request) {

@@ -18,7 +18,7 @@ public class PutDiscount {
   
   @Id
   @SequenceGenerator(name = "discount_id_seq", sequenceName = "discount_id_seq", allocationSize = 1)
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "discount_seq")
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "discount_id_seq")
   @Column(name = "discount_id", updatable = false)
   private Long id;
 
