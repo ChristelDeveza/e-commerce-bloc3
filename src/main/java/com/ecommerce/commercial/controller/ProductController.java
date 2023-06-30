@@ -1,7 +1,15 @@
 package com.ecommerce.commercial.controller;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+
+
+import org.hibernate.exception.DataException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,8 +22,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ecommerce.commercial.config.JwtConfig;
 import com.ecommerce.commercial.model.Product;
 import com.ecommerce.commercial.service.ProductService;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @CrossOrigin
@@ -60,6 +74,70 @@ public ResponseEntity<String> deleteProduct(@PathVariable(name="id") Long id, Ht
     
     productService.deleteProduct(id);
     return ResponseEntity.ok("Produit supprimé avec succès");
+}
+
+@GetMapping("/generate-pdf")
+public void generatePdf(HttpServletResponse response) throws IOException {
+    try {
+      List<Product> products = productService.getAllProducts();
+
+        // Crée un document PDF
+        Document document = new Document();
+
+        // Crée PDF en utilisant la réponse HTTP
+        PdfWriter.getInstance(document, response.getOutputStream());
+
+        // Ouvre le document
+        document.open();
+
+        // Crée un tableau avec 3 colonnes
+        PdfPTable table = new PdfPTable(3);
+
+        // Titre au document avec affichage de la date
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String currentDate = dateFormat.format(new Date());
+        document.add(new Paragraph("Mes produits en promotion à la date du " + currentDate));
+
+        // Permet de créer un espace entre le titre du document et le tableau
+        table.setSpacingBefore(20);
+
+        // Ajoute les en-têtes du tableau
+        table.addCell("Nom du produit");
+        table.addCell("Prix avant promotion");
+        table.addCell("Prix après promotion");
+
+        // Boucle for qui permet d'ajouter les éléments (nom, prix avant promotion, prix après promotion, dans le document)
+        for (Product product : products) {
+          // Condition : uniquement les produits en promotion
+          if(product.getDiscountedPrice() != null) {
+            // Ajouter les données du produit dans le document (String.valueOf permet de convertir le nombre en chaîne de caractères)
+            table.addCell(new Paragraph(product.getName()));
+            table.addCell(new Paragraph(String.valueOf(product.getPrice())));
+            table.addCell(new Paragraph(String.valueOf(product.getDiscountedPrice())));
+          }
+        
+        }
+
+        // Ajout du tableau dans le document
+        document.add(table);
+
+        // Ferme le document
+        document.close();
+
+        // Définie les en-têtes de la réponse HTTP pour le téléchargement du fichier PDF
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=\"mon_document.pdf\"");
+        response.flushBuffer();
+
+        // Envoie le contenu du fichier PDF généré dans la réponse HTTP
+        response.getOutputStream().flush();
+    } catch (DocumentException e) {
+        // Gére les erreurs liées à la génération du PDF
+        e.printStackTrace();
+        // Retourne une réponse d'erreur appropriée
+        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+    }
+    
 }
 
 }
