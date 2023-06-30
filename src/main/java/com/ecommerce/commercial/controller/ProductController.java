@@ -1,6 +1,8 @@
 package com.ecommerce.commercial.controller;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -91,8 +93,13 @@ public void generatePdf(HttpServletResponse response) throws IOException {
         // Crée un tableau avec 3 colonnes
         PdfPTable table = new PdfPTable(3);
 
-        // Titre au document
-        document.add(new Paragraph("Mes produits en promotion"));
+        // Titre au document avec affichage de la date
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String currentDate = dateFormat.format(new Date());
+        document.add(new Paragraph("Mes produits en promotion à la date du " + currentDate));
+
+        // Permet de créer un espace entre le titre du document et le tableau
+        table.setSpacingBefore(20);
 
         // Ajoute les en-têtes du tableau
         table.addCell("Nom du produit");
@@ -103,7 +110,7 @@ public void generatePdf(HttpServletResponse response) throws IOException {
         for (Product product : products) {
           // Condition : uniquement les produits en promotion
           if(product.getDiscountedPrice() != null) {
-            // Ajouter les données du produit dans le document (String.valueOf permet de convertir le nombre)
+            // Ajouter les données du produit dans le document (String.valueOf permet de convertir le nombre en chaîne de caractères)
             table.addCell(new Paragraph(product.getName()));
             table.addCell(new Paragraph(String.valueOf(product.getPrice())));
             table.addCell(new Paragraph(String.valueOf(product.getDiscountedPrice())));
