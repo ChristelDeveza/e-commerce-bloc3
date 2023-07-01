@@ -99,7 +99,7 @@ public void generatePdf(HttpServletResponse response) throws IOException, URISyn
         // Crée un tableau avec 4 colonnes
         PdfPTable table = new PdfPTable(4);
 
-        // Titre au document avec affichage de la date
+        // Titre du document avec affichage de la date
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String currentDate = dateFormat.format(new Date());
         document.add(new Paragraph("Mes produits en promotion à la date du " + currentDate));
@@ -114,7 +114,7 @@ public void generatePdf(HttpServletResponse response) throws IOException, URISyn
         table.addCell("image");
 
 
-        // Boucle for qui permet d'ajouter les éléments (nom, prix avant promotion, prix après promotion, dans le document)
+        // Boucle for qui permet d'ajouter les éléments (nom, prix avant promotion, prix après promotion, image dans le document)
         for (Product product : products) {
           // Condition : uniquement les produits en promotion
           if(product.getDiscountedPrice() != null) {
