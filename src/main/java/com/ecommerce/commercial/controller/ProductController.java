@@ -1,11 +1,15 @@
 package com.ecommerce.commercial.controller;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-
+import javax.swing.ImageIcon;
 
 import org.hibernate.exception.DataException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +28,7 @@ import com.ecommerce.commercial.model.Product;
 import com.ecommerce.commercial.service.ProductService;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -77,7 +82,7 @@ public ResponseEntity<String> deleteProduct(@PathVariable(name="id") Long id, Ht
 }
 
 @GetMapping("/generate-pdf")
-public void generatePdf(HttpServletResponse response) throws IOException {
+public void generatePdf(HttpServletResponse response) throws IOException, URISyntaxException {
     try {
       List<Product> products = productService.getAllProducts();
 
@@ -91,7 +96,7 @@ public void generatePdf(HttpServletResponse response) throws IOException {
         document.open();
 
         // Crée un tableau avec 3 colonnes
-        PdfPTable table = new PdfPTable(3);
+        PdfPTable table = new PdfPTable(4);
 
         // Titre au document avec affichage de la date
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -105,6 +110,8 @@ public void generatePdf(HttpServletResponse response) throws IOException {
         table.addCell("Nom du produit");
         table.addCell("Prix avant promotion");
         table.addCell("Prix après promotion");
+        table.addCell("image");
+
 
         // Boucle for qui permet d'ajouter les éléments (nom, prix avant promotion, prix après promotion, dans le document)
         for (Product product : products) {
@@ -114,6 +121,16 @@ public void generatePdf(HttpServletResponse response) throws IOException {
             table.addCell(new Paragraph(product.getName()));
             table.addCell(new Paragraph(String.valueOf(product.getPrice())));
             table.addCell(new Paragraph(String.valueOf(product.getDiscountedPrice())));
+            table.addCell(new Paragraph(product.getImage()));
+            
+            // String photoPath = product.getPhotosImagePath();
+            // System.out.println("Value of photoPath: " + "../resources/static" + photoPath);
+
+            // if(photoPath != null) {
+            // Path path = Paths.get(ClassLoader.getSystemResource("commercial/src/main/resources/static" + photoPath).toURI());
+            // Image image = Image.getInstance(path.toAbsolutePath().toString());
+            // table.addCell(image);
+            // }
           }
         
         }
