@@ -6,6 +6,7 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -95,7 +96,7 @@ public void generatePdf(HttpServletResponse response) throws IOException, URISyn
         // Ouvre le document
         document.open();
 
-        // Crée un tableau avec 3 colonnes
+        // Crée un tableau avec 4 colonnes
         PdfPTable table = new PdfPTable(4);
 
         // Titre au document avec affichage de la date
@@ -117,6 +118,9 @@ public void generatePdf(HttpServletResponse response) throws IOException, URISyn
         for (Product product : products) {
           // Condition : uniquement les produits en promotion
           if(product.getDiscountedPrice() != null) {
+            LocalDate date = LocalDate.now();
+            if(product.getDiscount().getStartDate().isBefore(date) &&
+            (product.getDiscount().getEndDate() == null || product.getDiscount().getEndDate().isAfter(date))) {
             // Ajouter les données du produit dans le document (String.valueOf permet de convertir le nombre en chaîne de caractères)
             table.addCell(new Paragraph(product.getName()));
             table.addCell(new Paragraph(String.valueOf(product.getPrice())));
@@ -131,6 +135,7 @@ public void generatePdf(HttpServletResponse response) throws IOException, URISyn
             // Image image = Image.getInstance(path.toAbsolutePath().toString());
             // table.addCell(image);
             // }
+            }
           }
         
         }
