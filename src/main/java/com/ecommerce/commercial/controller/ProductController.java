@@ -149,10 +149,9 @@ public void generatePdf(HttpServletResponse response) throws IOException, URISyn
         // Définie les en-têtes de la réponse HTTP pour le téléchargement du fichier PDF
         response.setContentType("application/pdf");
         response.setHeader("Content-Disposition", "attachment; filename=\"mon_document.pdf\"");
-        response.flushBuffer();
-
+        
         // Envoie le contenu du fichier PDF généré dans la réponse HTTP
-        response.getOutputStream().flush();
+        response.getOutputStream();
     } catch (DocumentException e) {
         // Gére les erreurs liées à la génération du PDF
         e.printStackTrace();
